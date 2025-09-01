@@ -19,9 +19,9 @@
     </ItemGroup>
 
     <ItemGroup>
-     <ProjectReference Include="..\..\..\Framework\MGH.Core.Application\MGH.Core.Application.csproj" />
-     <ProjectReference Include="..\..\..\Framework\MGH.Core.Infrastructure.Caching\MGH.Core.Infrastructure.Caching.csproj" />
-      <ProjectReference Include="..\..\..\Framework\MGH.Core.Infrastructure.ElasticSearch\MGH.Core.Infrastructure.ElasticSearch.csproj" />
+     <ProjectReference Include="..\Framework\MGH.Core.Application\MGH.Core.Application.csproj" />
+     <ProjectReference Include="..\Framework\MGH.Core.Infrastructure.Caching\MGH.Core.Infrastructure.Caching.csproj" />
+      <ProjectReference Include="..\Framework\MGH.Core.Infrastructure.ElasticSearch\MGH.Core.Infrastructure.ElasticSearch.csproj" />
       <ProjectReference Include="..\Security.Domain\Security.Domain.csproj" />
     </ItemGroup>
 

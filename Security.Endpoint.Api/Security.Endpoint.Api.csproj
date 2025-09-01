@@ -24,8 +24,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Framework\MGH.Core.Endpoint.Swagger\MGH.Core.Endpoint.Swagger.csproj" />
-        <ProjectReference Include="..\..\..\Framework\MGH.Core.Endpoint.Web\MGH.Core.Endpoint.Web.csproj" />
+        <ProjectReference Include="..\Framework\MGH.Core.Endpoint.Swagger\MGH.Core.Endpoint.Swagger.csproj" />
+        <ProjectReference Include="..\Framework\MGH.Core.Endpoint.Web\MGH.Core.Endpoint.Web.csproj" />
         <ProjectReference Include="..\Security.Application\Security.Application.csproj" />
         <ProjectReference Include="..\Security.Infrastructure\Security.Infrastructure.csproj" />
     </ItemGroup>

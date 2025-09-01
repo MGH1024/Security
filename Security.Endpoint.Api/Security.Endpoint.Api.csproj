@@ -21,11 +21,11 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="MediatR" Version="12.4.0" />
-    </ItemGroup>
+		<PackageReference Include="MGH.Core.Endpoint.Swagger" Version="3.0.1"/>
+		<PackageReference Include="MGH.Core.Endpoint.Web" Version="3.0.1"/>
+	</ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Framework\MGH.Core.Endpoint.Swagger\MGH.Core.Endpoint.Swagger.csproj" />
-        <ProjectReference Include="..\Framework\MGH.Core.Endpoint.Web\MGH.Core.Endpoint.Web.csproj" />
         <ProjectReference Include="..\Security.Application\Security.Application.csproj" />
         <ProjectReference Include="..\Security.Infrastructure\Security.Infrastructure.csproj" />
     </ItemGroup>

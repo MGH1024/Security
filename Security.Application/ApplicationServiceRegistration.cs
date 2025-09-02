@@ -5,10 +5,7 @@ using MGH.Core.Application.Pipelines.Logging;
 using MGH.Core.Application.Pipelines.Transaction;
 using MGH.Core.Application.Pipelines.Validation;
 using MGH.Core.Application.Rules;
-using MGH.Core.Infrastructure.Caching;
 using MGH.Core.Infrastructure.Caching.Models;
-using MGH.Core.Infrastructure.ElasticSearch.ElasticSearch;
-using MGH.Core.Infrastructure.ElasticSearch.ElasticSearch.Base;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Security.Application.Features.Auth.Rules;
@@ -32,8 +29,6 @@ public static class ApplicationServiceRegistration
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
         services.AddServices();
         services.AddBusinessRules();
-        services.AddGeneralCachingService();
-        services.AddRedis(configuration);
     }
 
     private static void AddBusinessRules(this IServiceCollection services)
@@ -50,7 +45,6 @@ public static class ApplicationServiceRegistration
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IUserOperationClaimService, UserUserOperationClaimManager>();
         services.AddScoped<IUserService, UserManager>();
-        services.AddSingleton<IElasticSearch, ElasticSearchService>();
     }
 
     private static void AddMediatRAndBehaviors(this IServiceCollection services)
@@ -58,7 +52,6 @@ public static class ApplicationServiceRegistration
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            configuration.AddOpenBehavior(typeof(CachingBehavior<,>));
             configuration.AddOpenBehavior(typeof(LoggingBehaviour<,>));
             configuration.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
             configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));

@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using MGH.Core.Infrastructure.HealthCheck;
 using Security.Infrastructure.Repositories;
-using MGH.Core.Infrastructure.ElasticSearch;
 using Microsoft.Extensions.DependencyInjection;
 using MGH.Core.Infrastructure.Persistence.Base;
 using MGH.Core.Infrastructure.Securities.Security;
@@ -40,23 +39,26 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddCulture();
-        services.AddElasticSearch(configuration);
         services.AddRabbitMqEventBus(configuration);
         services.AddPrometheus();
-        services.AddInfrastructureHealthChecks<SecurityDbContext>(configuration);
+        services.AddHealthChecks(configuration);
+    }
+
+    private static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHealthChecksDashboard();
+        services.AddSqlServerHealthCheck<SecurityDbContext>(configuration);
     }
 
     private static void RegisterInterceptors(this IServiceCollection services)
     {
-        services.AddSingleton<OutBoxInterceptor>();
         services.AddSingleton<AuditFieldsInterceptor>();
-        services.AddSingleton<RemoveCacheInterceptor>();
         services.AddSingleton<AuditEntityInterceptor>();
     }
 
     private static void AddPrometheus(this IServiceCollection services)
     {
-        services.UseHttpClientMetrics(); 
+        services.UseHttpClientMetrics();
     }
 
     public static void AddPrometheus(this WebApplication app)
@@ -76,30 +78,10 @@ public static class InfrastructureServiceRegistration
         {
             options.UseSqlServer(sqlConfig, a => { a.EnableRetryOnFailure(); })
                 .AddInterceptors(
-                    sp.GetRequiredService<OutBoxInterceptor>(),
                     sp.GetRequiredService<AuditFieldsInterceptor>(),
-                    sp.GetRequiredService<RemoveCacheInterceptor>(),
                     sp.GetRequiredService<AuditEntityInterceptor>())
                 .LogTo(Console.Write, LogLevel.Information);
         });
-    }
-
-    private static void AddDbContextPostgres(this IServiceCollection services, IConfiguration configuration)
-    {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        var postgresConfig = configuration
-            .GetSection(nameof(DatabaseConnection))
-            .Get<DatabaseConnection>()
-            .PostgresConnection;
-        services
-            .AddDbContext<SecurityDbContext>(options =>
-                options.UseNpgsql(postgresConfig, a =>
-                    {
-                        a.EnableRetryOnFailure();
-                        //a.MigrationsAssembly("Library.Api");
-                    })
-                    .AddInterceptors()
-                    .LogTo(Console.Write, LogLevel.Information));
     }
 
     private static void AddRepositories(this IServiceCollection services)
@@ -134,5 +116,4 @@ public static class InfrastructureServiceRegistration
             })
             .AddLocalization(opt => { opt.ResourcesPath = "Resources"; });
     }
-   
 }

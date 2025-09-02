@@ -1,0 +1,12 @@
+﻿# docker-compose.override.yml
+services:
+  security.endpoint.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+    volumes:
+      # mount source code into /src instead of overwriting /app
+      - ./Security.Endpoint.Api:/src:ro
+      - /app/bin
+      - /app/obj
+      - app-logs:/logs

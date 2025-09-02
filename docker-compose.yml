@@ -1,20 +1,24 @@
-﻿services:
+﻿version: '3.9'
+
+services:
   security.endpoint.api:
-    image: security.endpoint.api
     build:
       context: .
       dockerfile: Security.Endpoint.Api/Dockerfile
+      args:
+        ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+    image: security.endpoint.api:${ASPNETCORE_ENVIRONMENT:-Development}
     ports:
-      - "5278:8080"
+      - "${API_PORT:-5278}:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
       - ASPNETCORE_URLS=http://+:8080
       - TokenOptions__Audience=${JWT_AUDIENCE}
       - TokenOptions__Issuer=${JWT_ISSUER}
       - TokenOptions__AccessTokenExpiration=${JWT_ACCESS_TOKEN_EXPIRATION}
       - TokenOptions__SecurityKey=${JWT_SECURITY_KEY}
       - TokenOptions__RefreshTokenTtl=${JWT_REFRESH_TOKEN_TTL}
-      - DatabaseConnection__SqlConnection=Data Source=${SQL_SERVER_HOST:-host.docker.internal};Initial Catalog=${SQL_DATABASE};User ID=sa;Password=${DB_SA_PASSWORD};Integrated Security=false;MultipleActiveResultSets=true;TrustServerCertificate=True
+      - DatabaseConnection__SqlConnection=Data Source=${SQL_SERVER_HOST};Initial Catalog=${SQL_DATABASE};User ID=sa;Password=${DB_SA_PASSWORD};Integrated Security=false;MultipleActiveResultSets=true;TrustServerCertificate=True
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

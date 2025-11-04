@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Security.Application.Features.Auth.Commands.RefreshToken;
 using Security.Application.Features.Auth.Commands.RegisterUser;
+using Security.Application.Features.Auth.Commands.RevokeToken;
 using Security.Application.Features.Auth.Commands.UserLogin;
 using Security.Endpoint.Api.Profiles;
 
@@ -87,7 +88,7 @@ public class AuthController(ISender sender, IMapper mapper) : AppController(send
         string refreshToken, CancellationToken cancellationToken)
     {
         var token = refreshToken ?? GetRefreshTokenFromCookies();
-        var revokeTokenCommand = token.ToRevokeTokenCommand();
+        var revokeTokenCommand = mapper.Map<RevokeTokenCommand>(token);
 
         var result = await Sender.Send(revokeTokenCommand, cancellationToken);
         return Ok(result);

@@ -1,16 +1,16 @@
-﻿using Asp.Versioning;
+﻿using MediatR;
 using AutoMapper;
-using MediatR;
-using MGH.Core.Application.Requests;
+using Asp.Versioning;
 using MGH.Core.Endpoint.Web;
 using Microsoft.AspNetCore.Mvc;
+using MGH.Core.Application.Requests;
+using Security.Endpoint.Api.Profiles;
 using Security.Application.Features.Users.Commands.Create;
 using Security.Application.Features.Users.Commands.Delete;
 using Security.Application.Features.Users.Commands.Update;
-using Security.Application.Features.Users.Commands.UpdateFromAuth;
 using Security.Application.Features.Users.Queries.GetById;
 using Security.Application.Features.Users.Queries.GetList;
-using Security.Endpoint.Api.Profiles;
+using Security.Application.Features.Users.Commands.UpdateFromAuth;
 
 namespace Security.Endpoint.Api.Controllers.V1;
 
@@ -30,7 +30,7 @@ public class UsersController(ISender sender, IMapper mapper) : AppController(sen
     [HttpGet("GetFromAuth")]
     public async Task<IActionResult> GetFromAuth(CancellationToken cancellationToken)
     {
-        var getByIdUserQuery = GetUserIdFromRequest().ToGetByIdUserQuery();
+        var getByIdUserQuery = mapper.Map<GetUserByIdQuery>(GetUserIdFromRequest());
         var result = await Sender.Send(getByIdUserQuery, cancellationToken);
         return Ok(result);
     }
@@ -62,7 +62,7 @@ public class UsersController(ISender sender, IMapper mapper) : AppController(sen
     public async Task<IActionResult> UpdateFromAuth([FromBody] UpdateUserFromAuthCommand updateUserFromAuthCommand,
         CancellationToken cancellationToken)
     {
-        updateUserFromAuthCommand.AddUserId(GetUserIdFromRequest());
+        updateUserFromAuthCommand.Id = GetUserIdFromRequest();
         var result = await Sender.Send(updateUserFromAuthCommand, cancellationToken);
         return Ok(result);
     }

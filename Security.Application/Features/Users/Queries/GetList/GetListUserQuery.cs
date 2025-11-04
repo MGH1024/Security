@@ -1,11 +1,12 @@
-using AutoMapper;
 using MediatR;
-using MGH.Core.Application.Pipelines.Authorization;
+using AutoMapper;
+using Security.Domain;
 using MGH.Core.Application.Requests;
 using MGH.Core.Application.Responses;
+using MGH.Core.Application.Pipelines.Authorization;
 using Security.Application.Features.Users.Constants;
-using Security.Application.Features.Users.Extensions;
-using Security.Domain;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.Users.Queries.GetList;
 
@@ -20,13 +21,12 @@ public class GetListUserQuery(PageRequest pageRequest)
     }
 }
 
-public class GetListUserQueryHandler(IUow uow, IMapper mapper)
-    : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserListItemDto>>
+public class GetListUserQueryHandler(IUow uow, IMapper mapper) : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserListItemDto>>
 {
-    public async Task<GetListResponse<GetListUserListItemDto>> Handle(GetListUserQuery request,
-        CancellationToken cancellationToken)
+    public async Task<GetListResponse<GetListUserListItemDto>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
     {
-        var users = await uow.User.GetListAsync(request.ToGetListAsyncModel(cancellationToken));
+        var getUserListModel = mapper.Map<GetListModelAsync<User>>(request);
+        var users = await uow.User.GetListAsync(getUserListModel,cancellationToken);
         return mapper.Map<GetListResponse<GetListUserListItemDto>>(users);
     }
 }

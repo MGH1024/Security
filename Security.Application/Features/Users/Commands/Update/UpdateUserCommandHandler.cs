@@ -15,15 +15,15 @@ public class UpdateUserCommandHandler(
 {
     public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetAsync(request.Id,cancellationToken);
+        var user = await userRepository.GetAsync(request.Id, cancellationToken);
         await userBusinessRules.UserShouldBeExistsWhenSelected(user);
-        await userBusinessRules.UserEmailShouldNotExists(user.Email,cancellationToken);
+        await userBusinessRules.UserEmailShouldNotExists(user.Email, cancellationToken);
 
         user = mapper.Map(request, user);
         var hashingHelperModel = HashingHelper.CreatePasswordHash(request.Password);
         user.SetHashPassword(hashingHelperModel);
 
-        await userRepository.UpdateAsync(user,true, cancellationToken);
-        return user.ToUpdateUserResponse();
+        await userRepository.UpdateAsync(user, true, cancellationToken);
+        return mapper.Map<UpdatedUserResponse>(user);
     }
 }

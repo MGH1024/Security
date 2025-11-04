@@ -6,7 +6,7 @@ using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.Users.Services;
 
-public class UserManager(IUow uow, IUserBusinessRules userBusinessRules) : IUserService
+public class UserService(IUow uow, IUserBusinessRules userBusinessRules) : IUserService
 {
     public async Task<User> GetAsync(GetModel<User> getModel)
     {

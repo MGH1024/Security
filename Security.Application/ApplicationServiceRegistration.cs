@@ -41,10 +41,10 @@ public static class ApplicationServiceRegistration
 
     private static void AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IAuthService, AuthManager>();
-        services.AddScoped<IOperationClaimService, OperationClaimManager>();
-        services.AddScoped<IUserOperationClaimService, UserUserOperationClaimManager>();
-        services.AddScoped<IUserService, UserManager>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IOperationClaimService, OperationClaimService>();
+        services.AddScoped<IUserOperationClaimService, UserUserOperationClaimService>();
+        services.AddScoped<IUserService, UserService>();
     }
 
     private static void AddMediatRAndBehaviors(this IServiceCollection services)

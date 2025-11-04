@@ -1,5 +1,5 @@
-﻿using MGH.Core.Infrastructure.Securities.Security.Entities;
-using MGH.Core.Infrastructure.Securities.Security.JWT;
+﻿using MGH.Core.Infrastructure.Securities.Security.JWT;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
 
 namespace Security.Application.Features.Auth.Services;
 

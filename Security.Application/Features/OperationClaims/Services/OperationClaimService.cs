@@ -1,12 +1,12 @@
-﻿using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
+﻿using Security.Domain;
 using MGH.Core.Infrastructure.Persistence.Models.Paging;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.OperationClaims.Rules;
-using Security.Domain;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.OperationClaims.Services;
 
-public class OperationClaimManager(IUow uow, IOperationClaimBusinessRules operationClaimBusinessRules) : IOperationClaimService
+public class OperationClaimService(IUow uow, IOperationClaimBusinessRules operationClaimBusinessRules) : IOperationClaimService
 {
     public async Task<OperationClaim> GetAsync(GetModel<OperationClaim> getModel)
     {

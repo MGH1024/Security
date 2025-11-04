@@ -1,12 +1,12 @@
-﻿using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
+﻿using Security.Domain.Repositories;
 using MGH.Core.Infrastructure.Persistence.Models.Paging;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.UserOperationClaims.Rules;
-using Security.Domain.Repositories;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.UserOperationClaims.Services;
 
-public class UserUserOperationClaimManager(
+public class UserUserOperationClaimService(
     IUserOperationClaimRepository userUserOperationClaimRepository,
     IUserOperationClaimBusinessRules userOperationClaimBusinessRules) :
     IUserOperationClaimService

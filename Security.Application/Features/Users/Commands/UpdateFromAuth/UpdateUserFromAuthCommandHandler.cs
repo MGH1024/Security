@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Security.Domain;
+using Security.Domain.Repositories;
 using MGH.Core.Domain.Buses.Commands;
 using Security.Application.Features.Users.Rules;
 using Security.Application.Features.Auth.Services;
 using Security.Application.Features.Users.Extensions;
 using MGH.Core.Infrastructure.Securities.Security.Hashing;
-using Security.Domain.Repositories;
 
 namespace Security.Application.Features.Users.Commands.UpdateFromAuth;
 
@@ -23,7 +22,7 @@ public class UpdateUserFromAuthCommandHandler(
 
         await userBusinessRules.UserShouldBeExistsWhenSelected(user);
         await userBusinessRules.UserPasswordShouldBeMatched(user, request.OldPassword);
-        await userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user.Id, user.Email,cancellationToken);
+        await userBusinessRules.UserEmailShouldNotExists(user.Email,cancellationToken);
 
         user = mapper.Map(request, user);
         var hashingHelperModel = HashingHelper.CreatePasswordHash(request.Password);

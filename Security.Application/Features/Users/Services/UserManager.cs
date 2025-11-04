@@ -1,8 +1,8 @@
-﻿using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
+﻿using Security.Domain;
+using Security.Application.Features.Users.Rules;
 using MGH.Core.Infrastructure.Persistence.Models.Paging;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
-using Security.Application.Features.Users.Rules;
-using Security.Domain;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.Users.Services;
 
@@ -25,13 +25,13 @@ public class UserManager(IUow uow, IUserBusinessRules userBusinessRules) : IUser
 
     public async Task<User> AddAsync(User user, CancellationToken cancellationToken)
     {
-        await userBusinessRules.UserEmailShouldNotExistsWhenInsert(user.Email, cancellationToken);
+        await userBusinessRules.UserEmailShouldNotExists(user.Email, cancellationToken);
         return await uow.User.AddAsync(user,false, cancellationToken);
     }
 
     public async Task<User> UpdateAsync(User user, CancellationToken cancellationToken)
     {
-        await userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user.Id, user.Email, cancellationToken);
+        await userBusinessRules.UserEmailShouldNotExists(user.Email, cancellationToken);
         return await uow.User.UpdateAsync(user,false, cancellationToken);
     }
 

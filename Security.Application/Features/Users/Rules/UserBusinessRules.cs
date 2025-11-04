@@ -1,14 +1,13 @@
+using Security.Domain;
 using MGH.Core.Application.Rules;
 using MGH.Core.CrossCutting.Exceptions.Types;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
-using MGH.Core.Infrastructure.Securities.Security.Hashing;
 using Security.Application.Features.Auth.Constants;
-using Security.Application.Features.Users.Extensions;
-using Security.Domain;
+using MGH.Core.Infrastructure.Securities.Security.Hashing;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
 
 namespace Security.Application.Features.Users.Rules;
 
-public class UserBusinessRules(IUow uow) : BaseBusinessRules,IUserBusinessRules
+public class UserBusinessRules(IUow uow) : BaseBusinessRules, IUserBusinessRules
 {
     public Task UserShouldBeExistsWhenSelected(User user)
     {
@@ -17,10 +16,10 @@ public class UserBusinessRules(IUow uow) : BaseBusinessRules,IUserBusinessRules
         return Task.CompletedTask;
     }
 
-    public async Task UserIdShouldBeExistsWhenSelected(int id,CancellationToken cancellationToken)
+    public async Task UserIdShouldBeExistsWhenSelected(int id, CancellationToken cancellationToken)
     {
-        var doesExist = await uow.User.AnyAsync(id.ToGetBaseUser(),cancellationToken);
-        if (doesExist)
+        var user = await uow.User.GetAsync(id, cancellationToken);
+        if (user is null)
             throw new BusinessException(AuthMessages.UserDoesNotExists);
     }
 
@@ -31,17 +30,10 @@ public class UserBusinessRules(IUow uow) : BaseBusinessRules,IUserBusinessRules
         return Task.CompletedTask;
     }
 
-    public async Task UserEmailShouldNotExistsWhenInsert(string email,CancellationToken cancellationToken)
+    public async Task UserEmailShouldNotExists(string email, CancellationToken cancellationToken)
     {
-        var doesExists = await uow.User.AnyAsync(email.ToGetBaseUser(), cancellationToken);
-        if (doesExists)
-            throw new BusinessException(AuthMessages.UserMailAlreadyExists);
-    }
-
-    public async Task UserEmailShouldNotExistsWhenUpdate(int id, string email,CancellationToken cancellationToken)
-    {
-        var doesExists = await uow.User.AnyAsync(email.ToGetBaseUser(id),cancellationToken);
-        if (doesExists)
+        var user = await uow.User.GetByEmailAsync(email, cancellationToken);
+        if (user is not null)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 }

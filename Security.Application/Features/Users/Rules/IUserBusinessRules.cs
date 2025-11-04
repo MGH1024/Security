@@ -10,7 +10,5 @@ public interface IUserBusinessRules
 
     Task UserPasswordShouldBeMatched(User user, string password);
 
-    Task UserEmailShouldNotExistsWhenInsert(string email, CancellationToken cancellationToken);
-
-    Task UserEmailShouldNotExistsWhenUpdate(int id, string email, CancellationToken cancellationToken);
+    Task UserEmailShouldNotExists(string email, CancellationToken cancellationToken);
 }

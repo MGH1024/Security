@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+using Security.Domain.Repositories;
 using MGH.Core.Domain.Buses.Commands;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
-using MGH.Core.Infrastructure.Securities.Security.Hashing;
-using Security.Application.Features.Users.Extensions;
 using Security.Application.Features.Users.Rules;
-using Security.Domain;
+using Security.Application.Features.Users.Extensions;
+using MGH.Core.Infrastructure.Securities.Security.Hashing;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
 
 namespace Security.Application.Features.Users.Commands.Create;
 
-public class CreateUserCommandHandler(IMapper mapper, IUserBusinessRules userBusinessRules, IUow uow)
+public class CreateUserCommandHandler(IMapper mapper, IUserBusinessRules userBusinessRules, IUserRepository userRepository)
     : ICommandHandler<CreateUserCommand, CreatedUserResponse>
 {
     public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -19,9 +19,7 @@ public class CreateUserCommandHandler(IMapper mapper, IUserBusinessRules userBus
         var hashingHelperModel = HashingHelper.CreatePasswordHash(request.Password);
         user.SetHashPassword(hashingHelperModel);
 
-        var createdUser = await uow.User.AddAsync(user, cancellationToken);
-        await uow.CompleteAsync(cancellationToken);
-
+        var createdUser = await userRepository.AddAsync(user,true, cancellationToken);
         return mapper.Map<CreatedUserResponse>(createdUser);
     }
 }

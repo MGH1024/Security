@@ -1,7 +1,7 @@
-﻿using MGH.Core.Domain.Buses.Commands;
+﻿using Security.Domain;
+using MGH.Core.Domain.Buses.Commands;
 using Security.Application.Features.Auth.Rules;
 using Security.Application.Features.Auth.Services;
-using Security.Domain;
 
 namespace Security.Application.Features.Auth.Commands.RefreshToken;
 

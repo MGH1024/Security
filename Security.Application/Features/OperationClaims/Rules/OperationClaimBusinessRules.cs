@@ -1,9 +1,9 @@
+using Security.Domain;
 using MGH.Core.Application.Rules;
 using MGH.Core.CrossCutting.Exceptions.Types;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.OperationClaims.Constants;
-using Security.Domain;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.OperationClaims.Rules;
 
@@ -23,7 +23,6 @@ public class OperationClaimBusinessRules(IUow uow) : BaseBusinessRules, IOperati
             new GetBaseModel<OperationClaim>
             {
                 Predicate = b => b.Id == id,
-                CancellationToken = cancellationToken
             }, cancellationToken);
         if (doesExist)
             throw new BusinessException(OperationClaimsMessages.NotExists);
@@ -34,7 +33,6 @@ public class OperationClaimBusinessRules(IUow uow) : BaseBusinessRules, IOperati
         var doesExist = await uow.OperationClaim.AnyAsync(new GetBaseModel<OperationClaim>
         {
             Predicate = b => b.Name == name,
-            CancellationToken = cancellationToken
         }, cancellationToken);
         if (doesExist)
             throw new BusinessException(OperationClaimsMessages.AlreadyExists);

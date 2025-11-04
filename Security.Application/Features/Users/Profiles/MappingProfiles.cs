@@ -1,16 +1,15 @@
-using System.Linq.Expressions;
 using AutoMapper;
+using System.Linq.Expressions;
 using MGH.Core.Application.Responses;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 using MGH.Core.Infrastructure.Persistence.Models.Paging;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.Users.Commands.Create;
 using Security.Application.Features.Users.Commands.Delete;
 using Security.Application.Features.Users.Commands.Update;
-using Security.Application.Features.Users.Commands.UpdateFromAuth;
 using Security.Application.Features.Users.Queries.GetById;
 using Security.Application.Features.Users.Queries.GetList;
-using Security.Application.Helpers;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using Security.Application.Features.Users.Commands.UpdateFromAuth;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.Users.Profiles;
 
@@ -32,28 +31,20 @@ public class MappingProfiles : Profile
         
         CreateMap<DeleteUserCommand, GetModel<User>>()
             .ForMember(dest => dest.Predicate, opt
-                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id)))
-            .ForMember(dest => dest.CancellationToken, opt
-                => opt.MapFrom<CancellationTokenResolver<DeleteUserCommand, GetModel<User>>>()).ReverseMap();
+                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id))).ReverseMap();
 
 
         CreateMap<UpdateUserCommand, GetModel<User>>()
             .ForMember(dest => dest.Predicate, opt
-                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id)))
-            .ForMember(dest => dest.CancellationToken, opt
-                => opt.MapFrom<CancellationTokenResolver<UpdateUserCommand, GetModel<User>>>()).ReverseMap();
+                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id))).ReverseMap();
 
 
         CreateMap<UpdateUserFromAuthCommand, GetModel<User>>()
             .ForMember(dest => dest.Predicate, opt
-                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id)))
-            .ForMember(dest => dest.CancellationToken, opt
-                => opt.MapFrom<CancellationTokenResolver<UpdateUserFromAuthCommand, GetModel<User>>>()).ReverseMap();
+                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id))).ReverseMap();
 
         CreateMap<GetUserByIdQuery, GetModel<User>>()
             .ForMember(dest => dest.Predicate, opt
-                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id)))
-            .ForMember(dest => dest.CancellationToken, opt
-                => opt.MapFrom<CancellationTokenResolver<GetUserByIdQuery, GetModel<User>>>()).ReverseMap();
+                => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src.Id))).ReverseMap();
     }
 }

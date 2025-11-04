@@ -35,7 +35,7 @@ public class UpdateOperationClaimCommandHandler(
         await operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(request.Id, request.Name, cancellationToken);
         var mappedOperationClaim = mapper.Map(request, destination: operationClaim!);
 
-        var updatedOperationClaim = await uow.OperationClaim.UpdateAsync(mappedOperationClaim, cancellationToken);
+        var updatedOperationClaim = await uow.OperationClaim.UpdateAsync(mappedOperationClaim, false, cancellationToken);
         return mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
     }
 }

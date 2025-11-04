@@ -27,7 +27,8 @@ public class CreateUserOperationClaimCommandHandler(
             cancellationToken);
         var mappedUserOperationClaim = mapper.Map<UserOperationClaim>(request);
 
-        var createdUserOperationClaim = await uow.UserOperationClaim.AddAsync(mappedUserOperationClaim, cancellationToken);
+        var createdUserOperationClaim = await uow.UserOperationClaim.AddAsync(mappedUserOperationClaim,false, cancellationToken);
+        await uow.CommitTransactionAsync(cancellationToken);
         var createdUserOperationClaimDto = mapper.Map<CreatedUserOperationClaimResponse>(createdUserOperationClaim);
         return createdUserOperationClaimDto;
     }

@@ -1,9 +1,9 @@
-using AutoMapper;
 using MediatR;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
+using AutoMapper;
+using Security.Domain;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.UserOperationClaims.Rules;
-using Security.Domain;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.UserOperationClaims.Queries.GetById;
 
@@ -26,7 +26,6 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
                 new GetModel<UserOperationClaim>
                 {
                     Predicate = b => b.Id == request.Id,
-                    CancellationToken = cancellationToken
                 });
             await userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);
 

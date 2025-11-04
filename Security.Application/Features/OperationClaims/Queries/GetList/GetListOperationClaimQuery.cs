@@ -1,13 +1,13 @@
-using AutoMapper;
 using MediatR;
-using MGH.Core.Application.Pipelines.Authorization;
+using AutoMapper;
+using Security.Domain.Repositories;
 using MGH.Core.Application.Requests;
 using MGH.Core.Application.Responses;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
+using MGH.Core.Application.Pipelines.Authorization;
 using MGH.Core.Infrastructure.Persistence.Models.Paging;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.OperationClaims.Constants;
-using Security.Domain.Repositories;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.OperationClaims.Queries.GetList;
 
@@ -34,8 +34,7 @@ public class GetListOperationClaimQueryHandler(IOperationClaimRepository operati
             new GetListModelAsync<OperationClaim>
             {
                 Index = request.PageRequest.PageIndex,
-                Size = request.PageRequest.PageSize,
-                CancellationToken = cancellationToken
+                Size = request.PageRequest.PageSize
             });
         var response =
             mapper.Map<GetListResponse<GetListOperationClaimListItemDto>>(

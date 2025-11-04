@@ -22,7 +22,7 @@ public class AuthManager(IUow uow, ITokenHelper tokenHelper, IDateTime time, IOp
 
     public async Task<RefreshToken> AddRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
     {
-        return await uow.RefreshToken.AddAsync(refreshToken, cancellationToken);
+        return await uow.RefreshToken.AddAsync(refreshToken, false, cancellationToken);
     }
 
     public async Task DeleteOldRefreshTokens(int userId, CancellationToken cancellationToken)
@@ -82,6 +82,6 @@ public class AuthManager(IUow uow, ITokenHelper tokenHelper, IDateTime time, IOp
         refreshToken.Revoked = time.IranNow;
         refreshToken.ReasonRevoked = reason;
         refreshToken.ReplacedByToken = replacedByToken;
-        await uow.RefreshToken.UpdateAsync(refreshToken, cancellationToken);
+        await uow.RefreshToken.UpdateAsync(refreshToken, false, cancellationToken);
     }
 }

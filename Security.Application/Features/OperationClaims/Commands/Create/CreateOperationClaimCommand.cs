@@ -18,14 +18,14 @@ public class CreateOperationClaimCommand(string name) : ICommand<CreatedOperatio
     }
 }
 
-public class CreateOperationClaimCommandHandler(IUow uow , IMapper mapper, OperationClaimBusinessRules
+public class CreateOperationClaimCommandHandler(IUow uow, IMapper mapper, OperationClaimBusinessRules
     operationClaimBusinessRules) : ICommandHandler<CreateOperationClaimCommand, CreatedOperationClaimResponse>
 {
     public async Task<CreatedOperationClaimResponse> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
     {
         await operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(request.Name, cancellationToken);
         var mappedOperationClaim = mapper.Map<OperationClaim>(request);
-        var createdOperationClaim = await uow.OperationClaim.AddAsync(mappedOperationClaim, cancellationToken);
+        var createdOperationClaim = await uow.OperationClaim.AddAsync(mappedOperationClaim, false, cancellationToken);
         return mapper.Map<CreatedOperationClaimResponse>(createdOperationClaim);
     }
 }

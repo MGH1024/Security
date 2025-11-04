@@ -10,7 +10,5 @@ public interface IOperationClaimService
     Task<IPaginate<OperationClaim>> GetListAsync(GetListModelAsync<OperationClaim> getListAsyncModel);
     Task<OperationClaim> AddAsync(OperationClaim operationClaim, CancellationToken cancellationToken);
     Task<OperationClaim> UpdateAsync(OperationClaim operationClaim, CancellationToken cancellationToken);
-
-    Task<OperationClaim> DeleteAsync(OperationClaim operationClaim, bool permanent = false,
-        CancellationToken cancellationToken = default);
+    Task DeleteAsync(OperationClaim operationClaim, CancellationToken cancellationToken = default);
 }

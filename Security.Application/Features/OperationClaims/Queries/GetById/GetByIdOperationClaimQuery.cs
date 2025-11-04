@@ -1,12 +1,12 @@
-using AutoMapper;
 using MediatR;
-using MGH.Core.Application.Pipelines.Authorization;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
-using Microsoft.EntityFrameworkCore;
-using Security.Application.Features.OperationClaims.Constants;
-using Security.Application.Features.OperationClaims.Rules;
+using AutoMapper;
 using Security.Domain;
+using Microsoft.EntityFrameworkCore;
+using MGH.Core.Application.Pipelines.Authorization;
+using Security.Application.Features.OperationClaims.Rules;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using Security.Application.Features.OperationClaims.Constants;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.OperationClaims.Queries.GetById;
 
@@ -30,7 +30,6 @@ public class GetByIdOperationClaimQueryHandler(
             {
                 Predicate = b => b.Id == request.Id,
                 Include = q => q.Include(oc => oc.UserOperationClaims),
-                CancellationToken = cancellationToken
             });
         await operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
         var response = mapper.Map<GetByIdOperationClaimResponse>(operationClaim);

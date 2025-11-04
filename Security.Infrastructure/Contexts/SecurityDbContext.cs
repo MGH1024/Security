@@ -1,7 +1,7 @@
-﻿using MGH.Core.Domain.BaseModels;
-using MGH.Core.Domain.Entities;
+﻿using MGH.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
+using MGH.Core.Domain.Base;
 
 namespace Security.Infrastructure.Contexts;
 
@@ -25,7 +25,7 @@ public class SecurityDbContext(DbContextOptions<SecurityDbContext> options) :
     private void ApplyAuditFieldConfiguration(ModelBuilder modelBuilder)
     {
         var auditEntityTypes = modelBuilder.Model.GetEntityTypes()
-            .Where(e => e.ClrType.IsSubclassOf(typeof(Entity<>)))
+            .Where(e => e.ClrType.IsSubclassOf(typeof(FullAuditableEntity<>)))
             .ToList();
 
         foreach (var entityType in auditEntityTypes)

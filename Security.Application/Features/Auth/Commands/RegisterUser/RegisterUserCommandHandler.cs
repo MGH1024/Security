@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Security.Domain;
 using MGH.Core.Domain.Buses.Commands;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.Auth.Rules;
 using Security.Application.Features.Auth.Services;
-using Security.Domain;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
 
 namespace Security.Application.Features.Auth.Commands.RegisterUser;
 
@@ -21,7 +21,7 @@ public class RegisterUserCommandHandler(
         var newUser = mapper.Map<User>(request);
         authService.SetHashPassword(request.RegisterUserCommandDto.Password, newUser);
 
-        var createdUser = await uow.User.AddAsync(newUser, cancellationToken);
+        var createdUser = await uow.User.AddAsync(newUser,false,cancellationToken);
         var createdRefreshToken = await authService.CreateRefreshToken(createdUser);
         newUser.RefreshTokens.Add(createdRefreshToken);
 

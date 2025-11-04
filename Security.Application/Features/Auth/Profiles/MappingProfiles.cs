@@ -1,9 +1,9 @@
-using System.Linq.Expressions;
 using AutoMapper;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
+using System.Linq.Expressions;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
-using Security.Application.Features.Auth.Commands.RegisterUser;
 using Security.Application.Features.Auth.Commands.RevokeToken;
+using Security.Application.Features.Auth.Commands.RegisterUser;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.Auth.Profiles;
 
@@ -25,13 +25,11 @@ public class MappingProfiles : Profile
         CreateMap<string, GetBaseModel<User>>()
             .ForMember(dest => dest.Predicate, opt => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Email == src)))
             .ForMember(dest => dest.EnableTracking, opt => opt.MapFrom(src => false))
-            .ForMember(dest => dest.WithDeleted, opt => opt.Ignore())
-            .ForMember(dest => dest.CancellationToken, opt => opt.Ignore());
+            .ForMember(dest => dest.WithDeleted, opt => opt.Ignore());
 
         CreateMap<int, GetModel<User>>()
             .ForMember(dest => dest.Predicate, opt => opt.MapFrom(src => (Expression<Func<User, bool>>)(u => u.Id == src)))
             .ForMember(dest => dest.EnableTracking, opt => opt.MapFrom(src => false))
-            .ForMember(dest => dest.WithDeleted, opt => opt.Ignore())
-            .ForMember(dest => dest.CancellationToken, opt => opt.Ignore());
+            .ForMember(dest => dest.WithDeleted, opt => opt.Ignore());
     }
 }

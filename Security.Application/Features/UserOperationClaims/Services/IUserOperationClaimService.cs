@@ -8,7 +8,7 @@ public interface IUserOperationClaimService
 {
     Task<UserOperationClaim> GetAsync(GetModel<UserOperationClaim> getModel);
     Task<IPaginate<UserOperationClaim>> GetListAsync(GetListModelAsync<UserOperationClaim> getListAsyncModel);
-    Task<UserOperationClaim> AddAsync(UserOperationClaim userOperationClaim,CancellationToken cancellationToken);
-    Task<UserOperationClaim> UpdateAsync(UserOperationClaim userOperationClaim,CancellationToken cancellationToken);
-    Task<UserOperationClaim> DeleteAsync(UserOperationClaim userOperationClaim,CancellationToken cancellationToken, bool permanent = false);
+    Task<UserOperationClaim> AddAsync(UserOperationClaim userOperationClaim, CancellationToken cancellationToken);
+    Task<UserOperationClaim> UpdateAsync(UserOperationClaim userOperationClaim, CancellationToken cancellationToken);
+    Task DeleteAsync(UserOperationClaim userOperationClaim, CancellationToken cancellationToken = default);
 }

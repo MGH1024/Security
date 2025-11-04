@@ -1,7 +1,7 @@
-﻿using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
-using MGH.Core.Infrastructure.Securities.Security.Hashing;
+﻿using MGH.Core.Infrastructure.Securities.Security.Hashing;
 using Security.Application.Features.Users.Queries.GetList;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.Users.Extensions;
 
@@ -47,7 +47,6 @@ public static class UserExtension
         {
             Index = getListUserQuery.PageRequest.PageIndex,
             Size = getListUserQuery.PageRequest.PageSize,
-            CancellationToken = cancellationToken
         };
     }
 }

@@ -23,17 +23,17 @@ public class OperationClaimManager(IUow uow, IOperationClaimBusinessRules operat
     public async Task<OperationClaim> AddAsync(OperationClaim operationClaim, CancellationToken cancellationToken)
     {
         await operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(operationClaim.Name, cancellationToken);
-        return await uow.OperationClaim.AddAsync(operationClaim, cancellationToken);
+        return await uow.OperationClaim.AddAsync(operationClaim,false, cancellationToken);
     }
 
     public async Task<OperationClaim> UpdateAsync(OperationClaim operationClaim, CancellationToken cancellationToken)
     {
         await operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(operationClaim.Id, operationClaim.Name, cancellationToken);
-        return await uow.OperationClaim.UpdateAsync(operationClaim, cancellationToken);
+        return await uow.OperationClaim.UpdateAsync(operationClaim,false, cancellationToken);
     }
 
-    public async Task<OperationClaim> DeleteAsync(OperationClaim operationClaim, bool permanent , CancellationToken cancellationToken )
+    public async Task DeleteAsync(OperationClaim operationClaim, CancellationToken cancellationToken=default )
     {
-        return await uow.OperationClaim.DeleteAsync(operationClaim);
+         await uow.OperationClaim.DeleteAsync(operationClaim,false,cancellationToken);
     }
 }

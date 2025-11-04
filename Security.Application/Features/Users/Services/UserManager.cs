@@ -26,17 +26,17 @@ public class UserManager(IUow uow, IUserBusinessRules userBusinessRules) : IUser
     public async Task<User> AddAsync(User user, CancellationToken cancellationToken)
     {
         await userBusinessRules.UserEmailShouldNotExistsWhenInsert(user.Email, cancellationToken);
-        return await uow.User.AddAsync(user, cancellationToken);
+        return await uow.User.AddAsync(user,false, cancellationToken);
     }
 
     public async Task<User> UpdateAsync(User user, CancellationToken cancellationToken)
     {
         await userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user.Id, user.Email, cancellationToken);
-        return await uow.User.UpdateAsync(user, cancellationToken);
+        return await uow.User.UpdateAsync(user,false, cancellationToken);
     }
 
-    public async Task<User> DeleteAsync(User user, bool permanent = false)
+    public async Task DeleteAsync(User user,CancellationToken cancellationToken)
     {
-        return await uow.User.DeleteAsync(user);
+         await uow.User.DeleteAsync(user);
     }
 }

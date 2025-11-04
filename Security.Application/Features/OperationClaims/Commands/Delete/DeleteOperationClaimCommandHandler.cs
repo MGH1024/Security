@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MGH.Core.Domain.Buses.Commands;
-using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
-using Microsoft.EntityFrameworkCore;
-using Security.Application.Features.OperationClaims.Rules;
 using Security.Domain;
+using Microsoft.EntityFrameworkCore;
+using MGH.Core.Domain.Buses.Commands;
+using Security.Application.Features.OperationClaims.Rules;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
 namespace Security.Application.Features.OperationClaims.Commands.Delete;
 
@@ -20,7 +20,6 @@ public class DeleteOperationClaimCommandHandler(
             {
                 Predicate = oc => oc.Id == request.Id,
                 Include = q => q.Include(oc => oc.UserOperationClaims),
-                CancellationToken = cancellationToken
             });
 
         await operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);

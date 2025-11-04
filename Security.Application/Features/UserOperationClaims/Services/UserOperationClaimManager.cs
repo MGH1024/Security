@@ -26,7 +26,7 @@ public class UserUserOperationClaimManager(
         await userOperationClaimBusinessRules
             .UserShouldNotHasOperationClaimAlreadyWhenInsert(userUserOperationClaim.UserId, userUserOperationClaim.OperationClaimId,
                 cancellationToken);
-        return await userUserOperationClaimRepository.AddAsync(userUserOperationClaim, cancellationToken);
+        return await userUserOperationClaimRepository.AddAsync(userUserOperationClaim,false, cancellationToken);
     }
 
     public async Task<UserOperationClaim> UpdateAsync(UserOperationClaim userUserOperationClaim,
@@ -38,12 +38,11 @@ public class UserUserOperationClaimManager(
             userUserOperationClaim.OperationClaimId,
             cancellationToken
         );
-        return await userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim, cancellationToken);
+        return await userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim,false, cancellationToken);
     }
 
-    public async Task<UserOperationClaim> DeleteAsync(UserOperationClaim userUserOperationClaim, CancellationToken cancellationToken,
-        bool permanent = false)
+    public async Task DeleteAsync(UserOperationClaim userUserOperationClaim, CancellationToken cancellationToken=default)
     {
-        return await userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
+         await userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim,false,cancellationToken);
     }
 }

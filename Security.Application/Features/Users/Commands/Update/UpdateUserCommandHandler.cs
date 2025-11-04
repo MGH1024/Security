@@ -17,7 +17,7 @@ public class UpdateUserCommandHandler(
     {
         var user = await userRepository.GetAsync(request.Id, cancellationToken);
         await userBusinessRules.UserShouldBeExistsWhenSelected(user);
-        await userBusinessRules.UserEmailShouldNotExists(user.Email, cancellationToken);
+        await userBusinessRules.UserEmailShouldNotExists(request.Email, cancellationToken);
 
         user = mapper.Map(request, user);
         var hashingHelperModel = HashingHelper.CreatePasswordHash(request.Password);

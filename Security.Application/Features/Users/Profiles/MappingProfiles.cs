@@ -47,11 +47,12 @@ public class MappingProfiles : Profile
             .ReverseMap();
 
         CreateMap<User, UpdatedUserResponse>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
-            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(_ => false))
-        .ReverseMap();
+            .ConstructUsing(src => new UpdatedUserResponse(
+                src.Id,
+                src.FirstName,
+                src.LastName,
+                src.Email,
+                false)
+            );
     }
 }

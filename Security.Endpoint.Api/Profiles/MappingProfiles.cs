@@ -22,8 +22,7 @@ public class MappingProfiles : Profile
                 opt.MapFrom(src => src));
 
         CreateMap<string, RefreshTokenCommand>()
-            .ForMember(d => d.RefreshToken, opt
-                => opt.MapFrom(src => src));
+            .ConstructUsing(src => new RefreshTokenCommand(src));
 
         CreateMap<RegisterUserCommandDto, RegisterUserCommand>()
             .ForCtorParam("RegisterUserCommandDto", opt

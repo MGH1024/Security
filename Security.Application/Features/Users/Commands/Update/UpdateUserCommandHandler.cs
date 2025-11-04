@@ -24,6 +24,6 @@ public class UpdateUserCommandHandler(
         user.SetHashPassword(hashingHelperModel);
 
         await userRepository.UpdateAsync(user,true, cancellationToken);
-        return mapper.Map<UpdatedUserResponse>(user);
+        return user.ToUpdateUserResponse();
     }
 }

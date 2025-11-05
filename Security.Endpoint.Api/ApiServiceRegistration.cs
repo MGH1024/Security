@@ -1,19 +1,19 @@
-﻿using System.Reflection;
-using System.Text.Json.Serialization;
-using Asp.Versioning;
-using MGH.Core.CrossCutting.Exceptions;
-using MGH.Core.CrossCutting.Localizations.ModelBinders;
-using MGH.Core.CrossCutting.Logging;
+﻿using Asp.Versioning;
+using System.Reflection;
+using Security.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using MGH.Core.Endpoint.Swagger;
+using MGH.Core.CrossCutting.Logging;
+using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
+using MGH.Core.CrossCutting.Exceptions;
 using MGH.Core.Endpoint.Swagger.Models;
 using MGH.Core.Infrastructure.HealthCheck;
-using MGH.Core.Infrastructure.Securities.Security.Encryption;
-using MGH.Core.Infrastructure.Securities.Security.JWT;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.IdentityModel.Tokens;
-using Security.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MGH.Core.Infrastructure.Securities.Security.JWT;
+using MGH.Core.CrossCutting.Localizations.ModelBinders;
+using MGH.Core.Infrastructure.Securities.Security.Encryption;
 
 namespace Security.Endpoint.Api;
 
@@ -33,7 +33,6 @@ public static class ApiServiceRegistration
         services.AddJwt(configuration);
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
     }
-
 
     public static void RegisterApp(this WebApplicationBuilder builder)
     {

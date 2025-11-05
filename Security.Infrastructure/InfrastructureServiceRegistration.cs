@@ -1,9 +1,11 @@
 ﻿using Prometheus;
+using Security.Domain;
 using System.Reflection;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using Security.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MGH.Core.Infrastructure.Public;
 using Security.Infrastructure.Contexts;
@@ -13,16 +15,14 @@ using MGH.Core.Infrastructure.HealthCheck;
 using Security.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using MGH.Core.Infrastructure.Persistence.Base;
+using MGH.Core.Infrastructure.EventBus.RabbitMq;
 using MGH.Core.Infrastructure.Securities.Security;
 using Security.Infrastructure.Repositories.Security;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using MGH.Core.Infrastructure.Persistence.EF.Interceptors;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MGH.Core.CrossCutting.Localizations.RouteConstraints;
-using MGH.Core.Infrastructure.EventBus.RabbitMq;
 using MGH.Core.Infrastructure.Persistence.Models.Configuration;
-using Security.Domain;
-using Security.Domain.Repositories;
 
 namespace Security.Infrastructure;
 
@@ -46,8 +46,10 @@ public static class InfrastructureServiceRegistration
 
     private static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecksDashboard();
-        services.AddSqlServerHealthCheck<SecurityDbContext>(configuration);
+        var healthBuilder = services.AddHealthChecks();
+        healthBuilder.AddSqlServer(configuration["DatabaseConnection:SqlConnection"]);
+        healthBuilder.AddDbContextCheck<SecurityDbContext>();
+        services.AddHealthChecksDashboard("Security Health Check");
     }
 
     private static void RegisterInterceptors(this IServiceCollection services)

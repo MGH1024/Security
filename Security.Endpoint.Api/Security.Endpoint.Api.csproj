@@ -1,45 +1,35 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <Nullable>disable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <UserSecretsId>8f670f44-3469-4a26-ab4b-18c5b6d885e2</UserSecretsId>
-        <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Remove="wwwroot\**" />
-      <Content Remove="wwwroot\**" />
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-      <EmbeddedResource Remove="wwwroot\**" />
-      <None Remove="wwwroot\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Asp.Versioning.Abstractions" Version="8.1.0" />
-        <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
-        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
-        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-        <PackageReference Include="AutoMapper" Version="14.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
-        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.12.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="MediatR" Version="12.4.0" />
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a00f6731-562e-48bf-b792-1136b4684cce</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Asp.Versioning.Abstractions" Version="8.1.0" />
+		<PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
+		<PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+		<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+		<PackageReference Include="AutoMapper" Version="14.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
+		<PackageReference Include="Quartz.Extensions.Hosting" Version="3.12.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="MediatR" Version="12.4.0" />
 		<PackageReference Include="MGH.Core.Endpoint.Swagger" Version="3.0.1" />
 		<PackageReference Include="MGH.Core.Endpoint.Web" Version="3.0.1" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Security.Application\Security.Application.csproj" />
+		<ProjectReference Include="..\Security.Infrastructure\Security.Infrastructure.csproj" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Security.Application\Security.Application.csproj" />
-        <ProjectReference Include="..\Security.Infrastructure\Security.Infrastructure.csproj" />
-    </ItemGroup>
 </Project>

@@ -8,6 +8,6 @@ services:
     volumes:
       # Mount source code into /src for live coding
       - ./Security.Endpoint.Api:/src:ro
-      - /app/bin
-      - /app/obj
+      # - /app/bin
+      # - /app/obj
       - app-logs:/logs

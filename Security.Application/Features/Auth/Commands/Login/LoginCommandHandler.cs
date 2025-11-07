@@ -3,18 +3,18 @@ using MGH.Core.Domain.Buses.Commands;
 using Security.Application.Features.Auth.Rules;
 using Security.Application.Features.Auth.Services;
 
-namespace Security.Application.Features.Auth.Commands.UserLogin;
+namespace Security.Application.Features.Auth.Commands.Login;
 
-public class UserLoginCommandHandler(
+public class LoginCommandHandler(
     IUow uow,
     IAuthService authService,
-    IAuthBusinessRules authBusinessRules) : ICommandHandler<UserLoginCommand, UserLoginCommandResponse>
+    IAuthBusinessRules authBusinessRules) : ICommandHandler<LoginCommand, LoginCommandResponse>
 {
-    public async Task<UserLoginCommandResponse> Handle(UserLoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginCommandResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await uow.User.GetByEmailAsync(request.UserLoginCommandDto.Email, cancellationToken);
+        var user = await uow.User.GetByEmailAsync(request.LoginCommandDto.Email, cancellationToken);
         await authBusinessRules.UserShouldBeExistsWhenSelected(user);
-        await authBusinessRules.UserPasswordShouldBeMatch(user!.Id, request.UserLoginCommandDto.Password,
+        await authBusinessRules.UserPasswordShouldBeMatch(user!.Id, request.LoginCommandDto.Password,
             cancellationToken);
 
         var createdAccessToken = await authService.CreateAccessTokenAsync(user, cancellationToken);
@@ -22,7 +22,7 @@ public class UserLoginCommandHandler(
         var addedRefreshTkn = await authService.AddRefreshTokenAsync(createdRefreshTkn, cancellationToken);
         await authService.DeleteOldRefreshTokens(user.Id, cancellationToken);
 
-        return new UserLoginCommandResponse(createdAccessToken.Token, createdAccessToken.Expiration, addedRefreshTkn.Token,
+        return new LoginCommandResponse(createdAccessToken.Token, createdAccessToken.Expiration, addedRefreshTkn.Token,
             addedRefreshTkn.Expires, true);
     }
 }

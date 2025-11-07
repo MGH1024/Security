@@ -1,6 +1,6 @@
-﻿namespace Security.Application.Features.Auth.Commands.UserLogin;
+﻿namespace Security.Application.Features.Auth.Commands.Login;
 
-public record UserLoginCommandResponse(
+public record LoginCommandResponse(
     string Token,
     DateTime TokenExpiry,
     string RefreshToken,

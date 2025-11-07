@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Security.Application.Features.Auth.Commands.RegisterUser;
+namespace Security.Application.Features.Auth.Commands.Register;
 
-public class RegisterUserCommandDtoValidator : AbstractValidator<RegisterUserCommandDto>
+public class RegisterCommandDtoValidator : AbstractValidator<RegisterCommandDto>
 {
-    public RegisterUserCommandDtoValidator()
+    public RegisterCommandDtoValidator()
     {
         RuleFor(c => c.FirstName).NotEmpty().MinimumLength(2);
         RuleFor(c => c.LastName).NotEmpty().MinimumLength(2);

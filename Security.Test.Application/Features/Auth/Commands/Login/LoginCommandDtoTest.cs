@@ -1,21 +1,21 @@
 ﻿using FluentValidation.TestHelper;
-using Security.Application.Features.Auth.Commands.UserLogin;
+using Security.Application.Features.Auth.Commands.Login;
 
-namespace Security.Test.Application.Features.Auth.Commands.UserLogin;
+namespace Security.Test.Application.Features.Auth.Commands.Login;
 
-public class UserLoginCommandDtoTest
+public class LoginCommandDtoTest
 {
     [Theory]
     [InlineData("")]
     [InlineData(null)]
     public void GivenEmptyEmail_WhenValidate_ThenWillInvalid(string? email)
     {
-        var userLoginDto = new UserLoginDtoBuilder()
+        var loginDto = new LoginDtoBuilder()
             .WithEmail(email)
             .Build();
 
-        var validator = new UserLoginCommandDtoValidator();
-        var result = validator.TestValidate(userLoginDto);
+        var validator = new LoginCommandDtoValidator();
+        var result = validator.TestValidate(loginDto);
         result.ShouldHaveValidationErrorFor(x => x.Email);
     }
     
@@ -24,12 +24,12 @@ public class UserLoginCommandDtoTest
     [InlineData(null)]
     public void GivenEmptyPassword_WhenValidate_ThenWillInvalid(string? password)
     {
-        var userLoginDto = new UserLoginDtoBuilder()
+        var loginDto = new LoginDtoBuilder()
             .WithPassword(password)
             .Build();
 
-        var validator = new UserLoginCommandDtoValidator();
-        var result = validator.TestValidate(userLoginDto);
+        var validator = new LoginCommandDtoValidator();
+        var result = validator.TestValidate(loginDto);
         result.ShouldHaveValidationErrorFor(x => x.Password);
     }
     
@@ -40,12 +40,12 @@ public class UserLoginCommandDtoTest
     [InlineData("pas")]
     public void GivenLessThanFourCharacterPassword_WhenValidate_ThenWillInvalid(string? password)
     {
-        var userLoginDto = new UserLoginDtoBuilder()
+        var loginDto = new LoginDtoBuilder()
             .WithPassword(password)
             .Build();
 
-        var validator = new UserLoginCommandDtoValidator();
-        var result = validator.TestValidate(userLoginDto);
+        var validator = new LoginCommandDtoValidator();
+        var result = validator.TestValidate(loginDto);
         result.ShouldHaveValidationErrorFor(x => x.Password);
     }
 }

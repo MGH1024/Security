@@ -5,21 +5,21 @@ using Security.Application.Features.Auth.Rules;
 using Security.Application.Features.Auth.Services;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 
-namespace Security.Application.Features.Auth.Commands.RegisterUser;
+namespace Security.Application.Features.Auth.Commands.Register;
 
-public class RegisterUserCommandHandler(
+public class RegisterCommandHandler(
     IUow uow,
     IAuthService authService,
     IAuthBusinessRules authBusinessRules,
     IMapper mapper)
-    : ICommandHandler<RegisterUserCommand, RegisterUserCommandResponse>
+    : ICommandHandler<RegisterCommand, RegisterCommandResponse>
 {
-    public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<RegisterCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        await authBusinessRules.UserEmailShouldBeNotExists(request.RegisterUserCommandDto.Email, cancellationToken);
+        await authBusinessRules.UserEmailShouldBeNotExists(request.RegisterCommandDto.Email, cancellationToken);
 
         var newUser = mapper.Map<User>(request);
-        authService.SetHashPassword(request.RegisterUserCommandDto.Password, newUser);
+        authService.SetHashPassword(request.RegisterCommandDto.Password, newUser);
 
         var createdUser = await uow.User.AddAsync(newUser,false,cancellationToken);
         var createdRefreshToken = await authService.CreateRefreshToken(createdUser);
@@ -28,7 +28,7 @@ public class RegisterUserCommandHandler(
         await uow.CompleteAsync(cancellationToken);
 
         var createdAccessToken = await authService.CreateAccessTokenAsync(createdUser, cancellationToken);
-        return new RegisterUserCommandResponse(createdAccessToken.Token, createdAccessToken.Expiration,
+        return new RegisterCommandResponse(createdAccessToken.Token, createdAccessToken.Expiration,
             createdRefreshToken.Token, createdRefreshToken.Expires);
     }
 }

@@ -1,7 +1,7 @@
-﻿using MGH.Core.Infrastructure.Persistence.EF.Base.Repository;
-using MGH.Core.Infrastructure.Securities.Security.Entities;
-using Security.Domain.Repositories;
+﻿using Security.Domain.Repositories;
 using Security.Infrastructure.Contexts;
+using MGH.Core.Infrastructure.Securities.Security.Entities;
+using MGH.Core.Infrastructure.Persistence.EF.Base.Repositories;
 
 namespace Security.Infrastructure.Repositories.Security;
 

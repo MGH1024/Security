@@ -28,7 +28,7 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
         <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
 		<PackageReference Include="MGH.Core.Infrastructure" Version="3.0.1" />
-		<PackageReference Include="MGH.Core.Infrastructure.Securities" Version="3.0.2" />
+		<PackageReference Include="MGH.Core.Infrastructure.Securities" Version="3.0.3" />
     </ItemGroup>
 
     <ItemGroup>

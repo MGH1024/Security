@@ -46,6 +46,7 @@ public class AuthController(ISender sender, IMapper mapper) : AppController(send
             return BadRequest("Failed to login");
 
         SetCookie("refreshToken", response.RefreshToken, response.RefreshTokenExpiry);
+        SetCookie("token", response.Token, response.TokenExpiry);
         return Ok(response);
     }
 
@@ -84,6 +85,7 @@ public class AuthController(ISender sender, IMapper mapper) : AppController(send
         var command = mapper.Map<RegisterCommand>(registerCommandDto);
         var response = await Sender.Send(command, cancellationToken);
         SetCookie("refreshToken", response.RefreshToken, response.RefreshTokenExpiry);
+        SetCookie("token", response.Token, response.TokenExpiry);
         return Created(uri: "", response);
     }
 

@@ -6,17 +6,10 @@
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
-
-
 	<ItemGroup>
-		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.7" />
 		<PackageReference Include="MGH.Core.Application" Version="3.0.5" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Remove="Exceptions\Common\BadRequestException.cs" />
-		<Compile Remove="Models\Validation\ValidationError.cs" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.7" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

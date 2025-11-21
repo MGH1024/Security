@@ -1,5 +1,4 @@
-﻿using Prometheus;
-using Security.Domain;
+﻿using Security.Domain;
 using System.Reflection;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +39,6 @@ public static class InfrastructureServiceRegistration
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddCulture();
         services.AddRabbitMqEventBus(configuration);
-        services.AddPrometheus();
         services.AddHealthChecks(configuration);
     }
 
@@ -56,17 +54,6 @@ public static class InfrastructureServiceRegistration
     {
         services.AddSingleton<AuditFieldsInterceptor>();
         services.AddSingleton<AuditEntityInterceptor>();
-    }
-
-    private static void AddPrometheus(this IServiceCollection services)
-    {
-        services.UseHttpClientMetrics();
-    }
-
-    public static void AddPrometheus(this WebApplication app)
-    {
-        app.UseMetricServer();
-        app.UseHttpMetrics();
     }
 
     private static void AddDbContextSqlServer(this IServiceCollection services, IConfiguration configuration)

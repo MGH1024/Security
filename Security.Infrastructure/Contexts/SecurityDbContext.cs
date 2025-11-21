@@ -1,7 +1,7 @@
-﻿using MGH.Core.Domain.Entities;
+﻿using MGH.Core.Domain.Base;
 using Microsoft.EntityFrameworkCore;
+using MGH.Core.Infrastructure.Persistence.Entities;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
-using MGH.Core.Domain.Base;
 
 namespace Security.Infrastructure.Contexts;
 
@@ -18,6 +18,7 @@ public class SecurityDbContext(DbContextOptions<SecurityDbContext> options) :
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SecurityDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OutboxMessage).Assembly);
         //ApplyAuditFieldConfiguration(modelBuilder);
         base.OnModelCreating(modelBuilder);
     }

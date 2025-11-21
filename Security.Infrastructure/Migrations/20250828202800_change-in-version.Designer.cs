@@ -13,7 +13,7 @@ namespace Persistence.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
     [Migration("20250828202800_change-in-version")]
-    partial class changeinversion
+    partial class Changeinversion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

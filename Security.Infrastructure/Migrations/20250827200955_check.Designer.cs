@@ -13,7 +13,7 @@ namespace Persistence.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
     [Migration("20250827200955_check")]
-    partial class check
+    partial class Check
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

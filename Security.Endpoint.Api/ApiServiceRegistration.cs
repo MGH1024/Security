@@ -1,6 +1,5 @@
 ﻿using Asp.Versioning;
 using System.Reflection;
-using Security.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using MGH.Core.Endpoint.Swagger;
 using MGH.Core.CrossCutting.Logging;
@@ -47,7 +46,6 @@ public static class ApiServiceRegistration
         app.UseExceptionMiddleWare();
         app.UseStaticFiles();
         app.UseHealthChecksEndpoints();
-        app.AddPrometheus();
         app.Run();
     }
 
@@ -143,9 +141,9 @@ public static class ApiServiceRegistration
         services.AddSwaggerGen(op =>
         {
             op.AddXmlComments();
-            op.AddBearerToken(swaggerConfig.OpenApiSecuritySchemeConfig,
-                swaggerConfig.OpenApiReferenceConfig);
-            op.AddSwaggerDoc(swaggerConfig.OpenApiInfoConfig);
+            op.AddBearerToken(swaggerConfig?.OpenApiSecuritySchemeConfig,
+                swaggerConfig?.OpenApiReferenceConfig);
+            op.AddSwaggerDoc(swaggerConfig?.OpenApiInfoConfig);
         });
     }
 

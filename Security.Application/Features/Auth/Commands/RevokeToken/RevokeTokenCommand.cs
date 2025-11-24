@@ -1,4 +1,4 @@
-﻿using MGH.Core.Domain.Buses.Commands;
+﻿using MGH.Core.Application.Buses.Commands;
 
 namespace Security.Application.Features.Auth.Commands.RevokeToken;
 

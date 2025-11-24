@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Security.Domain;
 using Microsoft.EntityFrameworkCore;
-using MGH.Core.Domain.Buses.Commands;
+using MGH.Core.Application.Buses.Commands;
 using Security.Application.Features.OperationClaims.Rules;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;

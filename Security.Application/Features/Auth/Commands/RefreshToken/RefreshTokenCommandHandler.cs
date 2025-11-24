@@ -1,5 +1,5 @@
 ﻿using Security.Domain;
-using MGH.Core.Domain.Buses.Commands;
+using MGH.Core.Application.Buses.Commands;
 using Security.Application.Features.Auth.Rules;
 using Security.Application.Features.Auth.Services;
 

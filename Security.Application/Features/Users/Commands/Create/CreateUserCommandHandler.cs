@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Security.Domain.Repositories;
-using MGH.Core.Domain.Buses.Commands;
+using MGH.Core.Application.Buses.Commands;
 using Security.Application.Features.Users.Rules;
 using Security.Application.Features.Users.Extensions;
 using MGH.Core.Infrastructure.Securities.Security.Hashing;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MGH.Core.Application.Pipelines.Authorization;
-using MGH.Core.Domain.Buses.Commands;
+using MGH.Core.Application.Buses.Commands;
 using MGH.Core.Infrastructure.Securities.Security.Entities;
 using Security.Application.Features.OperationClaims.Constants;
 using Security.Application.Features.OperationClaims.Rules;

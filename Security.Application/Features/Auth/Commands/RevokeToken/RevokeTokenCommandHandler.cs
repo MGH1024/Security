@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Security.Domain.Repositories;
-using MGH.Core.Domain.Buses.Commands;
+using MGH.Core.Application.Buses.Commands;
 using Security.Application.Features.Auth.Rules;
 using MGH.Core.Infrastructure.Persistence.Models.Filters.GetModels;
 
